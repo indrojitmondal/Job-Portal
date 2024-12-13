@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import signInLottie from '../../assets/signin.json'
 import AuthContext from '../../context/AuthContext/AuthContext';
 import { Result } from 'postcss';
+import SocialLogin from '../../shared/SocialLogin';
 const SignIn = () => {
     const {createUser}= useContext(AuthContext);
     const {signInUser}= useContext(AuthContext);
@@ -54,6 +55,7 @@ const SignIn = () => {
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Login</button>
                         </div>
+                        <SocialLogin></SocialLogin>
                     </form>
                 </div>
             </div>
