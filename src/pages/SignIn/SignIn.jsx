@@ -4,9 +4,13 @@ import signInLottie from '../../assets/signin.json'
 import AuthContext from '../../context/AuthContext/AuthContext';
 import { Result } from 'postcss';
 import SocialLogin from '../../shared/SocialLogin';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 const SignIn = () => {
     const {createUser}= useContext(AuthContext);
     const {signInUser}= useContext(AuthContext);
+    const location = useLocation();
+    const navigate= useNavigate();
+    const from = location.state || '/';
     const handleSignIn=(e)=>{
         e.preventDefault();
         const form = e.target;
@@ -17,6 +21,8 @@ const SignIn = () => {
         signInUser(email, password)
         .then(result=>{
             console.log('Sign In user: ', result.user);
+            navigate(from);
+            
         })
         .catch(error=>{
             console.log(error.message);
