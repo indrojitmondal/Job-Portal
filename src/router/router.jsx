@@ -27,7 +27,7 @@ import ViewApplications from "../pages/ViewApplications/ViewApplications";
         {
           path:'/jobs/:id',
           element : <PrivateRoute><JobDetails></JobDetails></PrivateRoute>,
-          loader: ({params})=> fetch(`hthttps://job-portal-server-one-beryl.vercel.app/jobs/${params.id}`)    
+          loader: ({params})=> fetch(`https://job-portal-server-one-beryl.vercel.app/jobs/${params.id}`)    
         },
         {
           path:'/jobApply/:id',
@@ -40,7 +40,7 @@ import ViewApplications from "../pages/ViewApplications/ViewApplications";
         {
           path: '/ViewApplications/:job_id',
           element: <PrivateRoute> <ViewApplications></ViewApplications> </PrivateRoute>,
-          loader: ({params})=> fetch(`hthttps://job-portal-server-one-beryl.vercel.app/job-application/jobs/${params.job_id}`)
+          loader: ({params})=> fetch(`https://job-portal-server-one-beryl.vercel.app/job-application/jobs/${params.job_id}`)
         
         },
         {

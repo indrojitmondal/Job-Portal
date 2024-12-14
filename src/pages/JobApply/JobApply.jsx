@@ -21,7 +21,7 @@ const JobApply = () => {
             github,
             resume
         }
-        fetch('hthttps://job-portal-server-one-beryl.vercel.app/job-applications',{
+        fetch('https://job-portal-server-one-beryl.vercel.app/job-applications',{
             method: 'POST',
             headers :{
                 'content-type': 'application/json'

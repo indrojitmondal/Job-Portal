@@ -7,7 +7,7 @@ const MyApplication = () => {
     const [jobs, setJobs] = useState([]);
     useEffect(() => {
 
-        fetch(`hthttps://job-portal-server-one-beryl.vercel.app/job-application?email=${user.email}`)
+        fetch(`https://job-portal-server-one-beryl.vercel.app/job-application?email=${user.email}`)
             .then(res => res.json())
             .then(data => {
                 setJobs(data);
@@ -26,7 +26,7 @@ const MyApplication = () => {
           }).then((result) => {
             if (result.isConfirmed) {
                  
-                fetch(`hthttps://job-portal-server-one-beryl.vercel.app/job-application/${id}`,{
+                fetch(`https://job-portal-server-one-beryl.vercel.app/job-application/${id}`,{
                     method:'DELETE'
                 })
                 .then(res=>res.json())
