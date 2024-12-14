@@ -6,7 +6,11 @@ const AddJob = () => {
     const handleAddJob=(e)=>{
         e.preventDefault();
         const formData = new FormData(e.target);
-        console.log(Object.fromEntries(formData.entries()));
+        const initialData=Object.fromEntries(formData.entries());
+        console.log(initialData);
+        const {min, max, currency, ...newJob}= initialData;
+        newJob.salaryRange ={min, max, currency};
+        console.log(newJob);
     }
     return (
         <div>
