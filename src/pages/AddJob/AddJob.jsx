@@ -1,5 +1,6 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const AddJob = () => {
     const {user}= useAuth();
@@ -11,6 +12,29 @@ const AddJob = () => {
         const {min, max, currency, ...newJob}= initialData;
         newJob.salaryRange ={min, max, currency};
         console.log(newJob);
+        newJob.requirements = newJob.requirements.split('\n');
+        newJob.responsibilities = newJob.responsibilities.split('\n');
+        console.log(newJob);
+        fetch('http://localhost:5000/jobs',{
+            method:'POST',
+            headers: {
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(newJob)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.insertedId){
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "New Job has been added",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+
+            }
+        })
     }
     return (
         <div>
@@ -36,8 +60,8 @@ const AddJob = () => {
                     <label className="label">
                         <span className="label-text">Job Type</span>
                     </label>
-                    <select name='jobType' className="select select-ghost w-full max-w-xs">
-                        <option disabled selected>Pick a Job Type</option>
+                    <select defaultValue={'Pick a Job Type'} name='jobType' className="select select-ghost w-full max-w-xs">
+                        <option disabled >Pick a Job Type</option>
                         <option>Full-Time</option>
                         <option>Intern</option>
                         <option>Part-Time</option>
@@ -48,8 +72,9 @@ const AddJob = () => {
                     <label className="label">
                         <span className="label-text">Job Category</span>
                     </label>
-                    <select name='category' className="select select-ghost w-full max-w-xs">
-                        <option disabled selected>Pick a Job Category</option>
+                    <select defaultValue={'Pick a Job Category'} name='category' className="select select-ghost w-full max-w-xs">
+                        <option disabled >Pick a Job Category</option>
+                        
                         <option>Engineering</option>
                         <option>Marketing</option>
                         <option>Finance</option>
@@ -73,8 +98,8 @@ const AddJob = () => {
                     </div>
                     <div className="form-control">
 
-                        <select name='currency'  className="select select-ghost w-full max-w-xs">
-                            <option disabled selected>Currency</option>
+                        <select defaultValue={'Pick a currency'} name='currency'  className="select select-ghost w-full max-w-xs">
+                            <option disabled >Pick a currency</option>
                             <option>USD</option>
                             <option>BDT</option>
                             <option>INR</option>
