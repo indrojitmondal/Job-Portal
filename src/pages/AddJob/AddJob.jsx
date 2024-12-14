@@ -1,9 +1,11 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const AddJob = () => {
     const {user}= useAuth();
+    const navigate= useNavigate();
     const handleAddJob=(e)=>{
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -15,7 +17,7 @@ const AddJob = () => {
         newJob.requirements = newJob.requirements.split('\n');
         newJob.responsibilities = newJob.responsibilities.split('\n');
         console.log(newJob);
-        fetch('http://localhost:5000/jobs',{
+        fetch('hthttps://job-portal-server-one-beryl.vercel.app/jobs',{
             method:'POST',
             headers: {
                 'content-type':'application/json'
@@ -33,6 +35,9 @@ const AddJob = () => {
                     timer: 1500
                   });
 
+                  navigate('/myPostedJobs');
+
+
             }
         })
     }
@@ -45,7 +50,7 @@ const AddJob = () => {
                     <label className="label">
                         <span className="label-text">Job Title</span>
                     </label>
-                    <input type="text" name='job-title' placeholder="Job Title" className="input input-bordered" required />
+                    <input type="text" name='title' placeholder="Job Title" className="input input-bordered" required />
                 </div>
                 {/* Job Location */}
                 <div className="form-control">
@@ -155,13 +160,15 @@ const AddJob = () => {
                     </label>
                     <input type="text" defaultValue={user?.email} name='hr_email' placeholder="HR Email" className="input input-bordered" required />
                 </div>
-                {/* application Deadline */}
+                {/* Application Deadline */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Deadline</span>
                     </label>
-                    <input type="date" name='applicationDeadline' placeholder="Deadline" className="input input-bordered" required />
+                    <input type="date"  name='applicationDeadline' placeholder="Deadline" className="input input-bordered" required />
                 </div>
+               
+               
                 {/* Company logo */}
                 <div className="form-control">
                     <label className="label">

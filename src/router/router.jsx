@@ -11,6 +11,8 @@ import PrivateRoute from "./PrivateRoute";
 import JobApply from "../pages/JobApply/JobApply";
 import MyApplication from "../pages/MyApplication/MyApplication";
 import AddJob from "../pages/AddJob/AddJob";
+import MyPostedJobs from "../pages/MyPostedJobs/MyPostedJobs";
+import ViewApplications from "../pages/ViewApplications/ViewApplications";
 
   const router = createBrowserRouter([
     {
@@ -25,7 +27,7 @@ import AddJob from "../pages/AddJob/AddJob";
         {
           path:'/jobs/:id',
           element : <PrivateRoute><JobDetails></JobDetails></PrivateRoute>,
-          loader: ({params})=> fetch(`http://localhost:5000/jobs/${params.id}`)    
+          loader: ({params})=> fetch(`hthttps://job-portal-server-one-beryl.vercel.app/jobs/${params.id}`)    
         },
         {
           path:'/jobApply/:id',
@@ -36,8 +38,18 @@ import AddJob from "../pages/AddJob/AddJob";
           element: <PrivateRoute> <MyApplication></MyApplication> </PrivateRoute>
         },
         {
+          path: '/ViewApplications/:job_id',
+          element: <PrivateRoute> <ViewApplications></ViewApplications> </PrivateRoute>,
+          loader: ({params})=> fetch(`hthttps://job-portal-server-one-beryl.vercel.app/job-application/jobs/${params.job_id}`)
+        
+        },
+        {
           path: '/addJob',
           element: <PrivateRoute> <AddJob></AddJob> </PrivateRoute>
+        },
+        {
+          path: '/myPostedJobs',
+          element: <PrivateRoute> <MyPostedJobs></MyPostedJobs> </PrivateRoute>
         },
         {
           path: 'register',
