@@ -9,7 +9,7 @@ const Navbar = () => {
     const links = <>
         <li> <NavLink to={'/'}>Home </NavLink> </li>
         <li> <NavLink to={'/myApplications'}>My Application </NavLink> </li>
-        {/* <li> <NavLink to={''}>Home </NavLink> </li> */}
+        <li> <NavLink to={'/addJob'}>Add Job </NavLink> </li>
        
       
     </>
