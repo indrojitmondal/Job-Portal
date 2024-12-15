@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 const MyApplication = () => {
     const { user } = useAuth();
     const [jobs, setJobs] = useState([]);
+    
+    console.log(search);
     useEffect(() => {
 
         fetch(`https://job-portal-server-one-beryl.vercel.app/job-application?email=${user.email}`)
@@ -14,7 +16,8 @@ const MyApplication = () => {
             })
 
     }, [user.email]);
-    const handleDeleteJob=(id)=>{
+  
+    const handleDeleteJob = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't to delete this application!",
@@ -23,33 +26,37 @@ const MyApplication = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                 
-                fetch(`https://job-portal-server-one-beryl.vercel.app/job-application/${id}`,{
-                    method:'DELETE'
-                })
-                .then(res=>res.json())
-                .then(data=>{
-                    if (data.deletedCount > 0) {
-                        const remainingApplication = jobs.filter(job => job._id !== id);
-                        setJobs(remainingApplication);
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "The application has been deleted.",
-                            icon: "success"
-                        });
 
-                    }
+                fetch(`https://job-portal-server-one-beryl.vercel.app/job-application/${id}`, {
+                    method: 'DELETE'
                 })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            const remainingApplication = jobs.filter(job => job._id !== id);
+                            setJobs(remainingApplication);
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "The application has been deleted.",
+                                icon: "success"
+                            });
 
-            
+                        }
+                    })
+
+
             }
-          });
+        });
     }
     return (
         <div>
+
+
+         
             <h2 className="text-3xl">My Applications: {jobs.length} </h2>
+
 
             <div className="overflow-x-auto">
                 <table className="table">
@@ -68,9 +75,9 @@ const MyApplication = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         {
-                            jobs.map(job=> <tr key={job._id}>
+                            jobs.map(job => <tr key={job._id}>
                                 <th>
                                     <label>
                                         <input type="checkbox" className="checkbox" />
@@ -98,16 +105,16 @@ const MyApplication = () => {
                                 </td>
                                 <td>Purple</td>
                                 <th>
-                                    <button onClick={()=>handleDeleteJob(job._id)} className="btn btn-ghost btn-xs">X</button>
+                                    <button onClick={() => handleDeleteJob(job._id)} className="btn btn-ghost btn-xs">X</button>
                                 </th>
                             </tr>)
                         }
-                        
-                       
-                      
+
+
+
                     </tbody>
-               
-                   
+
+
                 </table>
             </div>
 
