@@ -1,45 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddJob = () => {
-    const {user}= useAuth();
-    const navigate= useNavigate();
-    const handleAddJob=(e)=>{
+    const [startDate, setStartDate] = useState(new Date());
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    console.log(startDate);
+    const handleAddJob = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const initialData=Object.fromEntries(formData.entries());
+        const initialData = Object.fromEntries(formData.entries());
         console.log(initialData);
-        const {min, max, currency, ...newJob}= initialData;
-        newJob.salaryRange ={min, max, currency};
+        const { min, max, currency, ...newJob } = initialData;
+        newJob.salaryRange = { min, max, currency };
         console.log(newJob);
         newJob.requirements = newJob.requirements.split('\n');
         newJob.responsibilities = newJob.responsibilities.split('\n');
+       newJob.applicationDeadline= startDate.toISOString().slice(0,10);
         console.log(newJob);
-        fetch('https://job-portal-server-one-beryl.vercel.app/jobs',{
-            method:'POST',
+        fetch('https://job-portal-server-one-beryl.vercel.app/jobs', {
+            method: 'POST',
             headers: {
-                'content-type':'application/json'
+                'content-type': 'application/json'
             },
             body: JSON.stringify(newJob)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            if(data.insertedId){
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "New Job has been added",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "New Job has been added",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
 
-                  navigate('/myPostedJobs');
+                    navigate('/myPostedJobs');
 
 
-            }
-        })
+                }
+            })
     }
     return (
         <div>
@@ -79,7 +84,7 @@ const AddJob = () => {
                     </label>
                     <select defaultValue={'Pick a Job Category'} name='category' className="select select-ghost w-full max-w-xs">
                         <option disabled >Pick a Job Category</option>
-                        
+
                         <option>Engineering</option>
                         <option>Marketing</option>
                         <option>Finance</option>
@@ -103,7 +108,7 @@ const AddJob = () => {
                     </div>
                     <div className="form-control">
 
-                        <select defaultValue={'Pick a currency'} name='currency'  className="select select-ghost w-full max-w-xs">
+                        <select defaultValue={'Pick a currency'} name='currency' className="select select-ghost w-full max-w-xs">
                             <option disabled >Pick a currency</option>
                             <option>USD</option>
                             <option>BDT</option>
@@ -126,7 +131,7 @@ const AddJob = () => {
                     <label className="label">
                         <span className="label-text">Company Name</span>
                     </label>
-                    <input  type="text" name='company' placeholder="Company Name" className="input input-bordered" required />
+                    <input type="text" name='company' placeholder="Company Name" className="input input-bordered" required />
 
                 </div>
 
@@ -165,10 +170,13 @@ const AddJob = () => {
                     <label className="label">
                         <span className="label-text">Deadline</span>
                     </label>
-                    <input type="date"  name='applicationDeadline' placeholder="Deadline" className="input input-bordered" required />
+                    {/* <input type="date"  name='applicationDeadline' placeholder="Deadline" className="input input-bordered" required />
+                 */}
+                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+               
                 </div>
-               
-               
+
+
                 {/* Company logo */}
                 <div className="form-control">
                     <label className="label">
